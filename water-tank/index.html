@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Water Tank</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="page">
+    <header class="intro">
+      <h1>Water Tank</h1>
+      <p>Enter the height of each block. Rain fills the gaps between taller blocks, and the tank shows how much water stays trapped.</p>
+    </header>
+
+    <form id="controls" class="controls" novalidate>
+      <label for="heights">Block heights</label>
+      <div class="row">
+        <input id="heights" name="heights" type="text" inputmode="numeric" autocomplete="off"
+               value="0,4,0,0,0,6,0,6,4,0" aria-describedby="hint error" />
+        <button type="submit" class="primary">Show water</button>
+        <button type="button" id="example" class="secondary">Use example</button>
+        <button type="button" id="random" class="secondary">Random</button>
+      </div>
+      <p id="hint" class="hint">Whole numbers, 0 or higher, separated by commas.</p>
+      <p id="error" class="error" role="alert"></p>
+    </form>
+
+    <section class="result" aria-live="polite">
+      <p class="total"><span id="total">0</span> <span id="unit">units</span> of water</p>
+    </section>
+
+    <figure class="tank-wrap">
+      <svg id="tank" role="img" aria-label="Tank diagram" xmlns="http://www.w3.org/2000/svg"></svg>
+      <figcaption class="legend">
+        <span class="swatch block"></span> Block
+        <span class="swatch water"></span> Trapped water
+      </figcaption>
+    </figure>
+  </main>
+
+  <script src="waterTank.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

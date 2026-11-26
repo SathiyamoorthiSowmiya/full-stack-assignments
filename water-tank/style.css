@@ -1,0 +1,123 @@
+:root {
+  --bg: #eaf0f4;
+  --panel: #ffffff;
+  --ink: #17232e;
+  --muted: #566573;
+  --block: #2f4152;
+  --block-text: #dbe6ee;
+  --water: #2aa7c9;
+  --water-text: #05323f;
+  --line: #c9d5de;
+  --danger: #b3261e;
+  --focus: #0a5ad4;
+  --radius: 10px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Avenir Next", "Segoe UI", system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+}
+
+.page {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 40px 20px 64px;
+}
+
+h1 {
+  margin: 0 0 8px;
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.intro p { margin: 0; max-width: 60ch; color: var(--muted); }
+
+.controls { margin-top: 28px; }
+
+.controls label { display: block; font-weight: 600; margin-bottom: 6px; }
+
+.row { display: flex; flex-wrap: wrap; gap: 10px; }
+
+input[type="text"] {
+  flex: 1 1 260px;
+  min-width: 0;
+  padding: 11px 14px;
+  font: inherit;
+  font-size: 1.05rem;
+  color: var(--ink);
+  background: var(--panel);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+}
+
+input[aria-invalid="true"] { border-color: var(--danger); }
+
+button {
+  padding: 11px 18px;
+  font: inherit;
+  font-weight: 600;
+  border-radius: var(--radius);
+  border: 1.5px solid transparent;
+  cursor: pointer;
+}
+
+button.primary { background: var(--block); color: #fff; }
+button.primary:hover { background: #22303d; }
+button.secondary { background: transparent; color: var(--block); border-color: var(--line); }
+button.secondary:hover { background: #dde7ee; }
+
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+
+.hint { margin: 8px 0 0; font-size: 0.9rem; color: var(--muted); }
+.error { margin: 4px 0 0; min-height: 1.4em; font-size: 0.95rem; color: var(--danger); font-weight: 600; }
+
+.result { margin-top: 20px; }
+.total { margin: 0; font-size: 1.5rem; font-weight: 600; }
+#total { font-size: 2.5rem; font-weight: 700; color: #0f7390; font-variant-numeric: tabular-nums; }
+
+.tank-wrap {
+  margin: 16px 0 0;
+  padding: 20px;
+  background: var(--panel);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius);
+}
+
+#tank {
+  display: block;
+  width: 100%;
+  max-height: 70vh;
+}
+
+.legend { margin-top: 14px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; font-size: 0.9rem; color: var(--muted); }
+.swatch { display: inline-block; width: 14px; height: 14px; border-radius: 3px; margin-right: 6px; vertical-align: -2px; }
+.swatch.block { background: var(--block); }
+.swatch.water { background: var(--water); }
+
+/* SVG parts */
+.svg-block { fill: var(--block); }
+.svg-water { fill: var(--water); fill-opacity: 0.85; }
+.svg-grid { stroke: #ffffff; stroke-opacity: 0.35; stroke-width: 1; }
+.svg-ground { stroke: var(--ink); stroke-width: 3; }
+.svg-label-block { fill: var(--block-text); font-size: 15px; font-weight: 600; text-anchor: middle; }
+.svg-label-water { fill: var(--water-text); font-size: 15px; font-weight: 700; text-anchor: middle; }
+
+/* The one moment of motion: water rises when the tank is drawn */
+.svg-water-col {
+  transform-box: fill-box;
+  transform-origin: bottom;
+  animation: rise 700ms ease-out both;
+}
+@keyframes rise {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .svg-water-col { animation: none; }
+}
