@@ -1,6 +1,6 @@
 const BUILDINGS = [
-  { key: "T", name: "Theatre",         buildTime: 5,  rate: 1500 },
-  { key: "P", name: "Pub",             buildTime: 4,  rate: 1000 },
+  { key: "T", name: "Theatre", buildTime: 5, rate: 1500 },
+  { key: "P", name: "Pub", buildTime: 4, rate: 1000 },
   { key: "C", name: "Commercial Park", buildTime: 10, rate: 2000 },
 ];
 
@@ -44,13 +44,21 @@ function maxProfit(n) {
 function format(n) {
   const { earnings, solutions } = maxProfit(n);
   const lines = [`Time Unit: ${n}`, `Earnings: $${earnings}`, "Solutions"];
-  solutions.forEach((s, i) => lines.push(`${i + 1}. T: ${s.T} P: ${s.P} C: ${s.C}`));
+  solutions.forEach((s, i) =>
+    lines.push(`${i + 1}. T: ${s.T} P: ${s.P} C: ${s.C}`),
+  );
   return lines.join("\n");
 }
 
-module.exports = { maxProfit, format };
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = { maxProfit, format };
 
-if (require.main === module) {
-  const inputs = process.argv.slice(2).map(Number);
-  (inputs.length ? inputs : [7, 8, 13]).forEach((n) => console.log(format(n) + "\n"));
+  if (require.main === module) {
+    const inputs = process.argv.slice(2).map(Number);
+    (inputs.length ? inputs : [7, 8, 13]).forEach((n) =>
+      console.log(format(n) + "\n"),
+    );
+  }
+} else {
+  window.MaxProfit = { maxProfit, format };
 }

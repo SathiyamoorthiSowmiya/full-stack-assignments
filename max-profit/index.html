@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Max Profit</title>
+  <style>
+    :root {
+      --bg: #eaf0f4;
+      --panel: #ffffff;
+      --ink: #17232e;
+      --muted: #566573;
+      --line: #c9d5de;
+      --accent: #2f4152;
+      --money: #0f7390;
+      --danger: #b3261e;
+      --focus: #0a5ad4;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: "Avenir Next", "Segoe UI", system-ui, -apple-system, sans-serif;
+      line-height: 1.5;
+    }
+    .page { max-width: 760px; margin: 0 auto; padding: 40px 20px 64px; }
+    h1 { margin: 0 0 8px; font-size: clamp(2rem, 5vw, 2.75rem); line-height: 1.1; letter-spacing: -0.02em; }
+    .intro { margin: 0; color: var(--muted); max-width: 60ch; }
+
+    table { width: 100%; margin-top: 24px; border-collapse: collapse; background: var(--panel);
+            border: 1.5px solid var(--line); border-radius: 10px; overflow: hidden; }
+    th, td { padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--line); }
+    th { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--muted); background: #f4f8fa; }
+    tr:last-child td { border-bottom: 0; }
+
+    form { margin-top: 28px; }
+    label { display: block; font-weight: 600; margin-bottom: 6px; }
+    .row { display: flex; flex-wrap: wrap; gap: 10px; }
+    input[type="text"] {
+      flex: 1 1 180px; min-width: 0; padding: 11px 14px; font: inherit; font-size: 1.05rem;
+      color: var(--ink); background: var(--panel); border: 1.5px solid var(--line); border-radius: 10px;
+    }
+    input[aria-invalid="true"] { border-color: var(--danger); }
+    button {
+      padding: 11px 18px; font: inherit; font-weight: 600; border-radius: 10px;
+      border: 1.5px solid transparent; cursor: pointer; background: var(--accent); color: #fff;
+    }
+    button:hover { background: #22303d; }
+    :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+    .hint { margin: 8px 0 0; font-size: 0.9rem; color: var(--muted); }
+    .error { margin: 4px 0 0; min-height: 1.4em; font-size: 0.95rem; color: var(--danger); font-weight: 600; }
+
+    .result { margin-top: 20px; padding: 20px; background: var(--panel); border: 1.5px solid var(--line); border-radius: 10px; }
+    .earnings { margin: 0; font-size: 1.1rem; color: var(--muted); }
+    .earnings strong { display: block; font-size: 2.5rem; color: var(--money); font-variant-numeric: tabular-nums; }
+    .result h2 { margin: 16px 0 8px; font-size: 1rem; }
+    ol { margin: 0; padding-left: 22px; }
+    li { margin: 4px 0; font-family: ui-monospace, "Cascadia Code", Consolas, monospace; }
+    .note { margin: 12px 0 0; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <h1>Max Profit</h1>
+    <p class="intro">Buildings are built one after another. A building earns money every time unit from the moment it is finished until time <strong>n</strong> ends. Enter n to see the best mix.</p>
+
+    <table>
+      <thead><tr><th>Building</th><th>Build time</th><th>Earns per time unit</th></tr></thead>
+      <tbody>
+        <tr><td>Theatre (T)</td><td>5</td><td>$1500</td></tr>
+        <tr><td>Pub (P)</td><td>4</td><td>$1000</td></tr>
+        <tr><td>Commercial Park (C)</td><td>10</td><td>$2000</td></tr>
+      </tbody>
+    </table>
+
+    <form id="controls" novalidate>
+      <label for="n">Time units (n)</label>
+      <div class="row">
+        <input id="n" type="text" inputmode="numeric" autocomplete="off" value="7" aria-describedby="hint error" />
+        <button type="submit">Calculate</button>
+      </div>
+      <p id="hint" class="hint">A whole number from 0 to 1000. Try 7, 8 or 13.</p>
+      <p id="error" class="error" role="alert"></p>
+    </form>
+
+    <section class="result" aria-live="polite">
+      <p class="earnings">Earnings <strong id="earnings">$0</strong></p>
+      <h2>Solutions</h2>
+      <ol id="solutions"></ol>
+      <p id="note" class="note" hidden></p>
+    </section>
+  </main>
+
+  <script src="maxProfit.js"></script>
+    <script>
+    (function () {
+      var MAX_N = 1000;
+      var input = document.getElementById("n");
+      var errorEl = document.getElementById("error");
+      var earningsEl = document.getElementById("earnings");
+      var listEl = document.getElementById("solutions");
+      var noteEl = document.getElementById("note");
+
+      function update() {
+        var text = input.value.trim();
+        if (!/^\d+$/.test(text) || Number(text) > MAX_N) {
+          errorEl.textContent = "Enter a whole number from 0 to " + MAX_N + ".";
+          input.setAttribute("aria-invalid", "true");
+          return;
+        }
+        errorEl.textContent = "";
+        input.removeAttribute("aria-invalid");
+
+        var result = window.MaxProfit.maxProfit(Number(text));
+        earningsEl.textContent = "$" + result.earnings;
+        listEl.innerHTML = "";
+        noteEl.hidden = true;
+
+        if (result.earnings === 0) {
+          noteEl.textContent = "No building can be finished early enough to earn anything. The shortest build (a Pub) takes 4 time units and needs at least 1 more unit to earn.";
+          noteEl.hidden = false;
+          return;
+        }
+        result.solutions.forEach(function (s) {
+          var li = document.createElement("li");
+          li.textContent = "T: " + s.T + "  P: " + s.P + "  C: " + s.C;
+          listEl.appendChild(li);
+        });
+      }
+
+      document.getElementById("controls").addEventListener("submit", function (e) { e.preventDefault(); update(); });
+      input.addEventListener("input", update);
+      update();
+    })();
+  </script>
+</body>
+</html>
