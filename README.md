@@ -36,7 +36,7 @@ npm start
 
 - **Max Profit:** dynamic programming with memoization, returns every optimal combination.
 - **Water Tank:** O(n) two-pass solution with a live SVG visualisation and input validation.
-- **Meeting Room API:** layered architecture (routes, controllers, services, repositories), idempotent booking creation, per-room locking to prevent double booking, time zone aware working-hours rules, and a utilization report. Design decisions and trade-offs are in [`meeting-room-api/DESIGN.md`](meeting-room-api/DESIGN.md).
+- **Meeting Room API:** layered architecture (routes, controllers, services, repositories), idempotent booking creation, per-room locking to prevent double booking, time zone aware working-hours rules, and a utilization report.
 
 ## Notes
 
