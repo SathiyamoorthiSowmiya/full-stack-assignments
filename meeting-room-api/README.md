@@ -3,6 +3,8 @@
 REST API for rooms and bookings. Node.js, Express and MongoDB (Mongoose), plain JavaScript.
 See [DESIGN.md](DESIGN.md) for the data model, overlap handling, idempotency, concurrency and the utilization formula.
 
+🔗 Live API: https://meeting-room-api-ge8u.onrender.com/
+
 ## Run
 
 You need Node 18+ and a MongoDB (local, or a free MongoDB Atlas cluster).
