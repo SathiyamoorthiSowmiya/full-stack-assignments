@@ -2,6 +2,8 @@
 
 Given `n` units of time, decide which buildings to build to earn the most money.
 
+🔗 Live API: https://full-stack-assignments-max-profit.vercel.app
+
 ## The rules
 
 | Building | Build time | Earnings per time unit |
