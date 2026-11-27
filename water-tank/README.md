@@ -2,6 +2,8 @@
 
 Given block heights, computes how many units of water are trapped between the blocks and draws the result as an SVG.
 
+![Water Tank screenshot](screenshot.png)
+
 ## Run
 Open `index.html` in a browser. No build step, no dependencies.
 
