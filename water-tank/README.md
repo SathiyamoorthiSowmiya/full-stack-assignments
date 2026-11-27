@@ -4,6 +4,8 @@ Given block heights, computes how many units of water are trapped between the bl
 
 ![Water Tank screenshot](screenshot.png)
 
+##🔗 Live API: https://full-stack-assignments-water-tank.vercel.app
+
 ## Run
 Open `index.html` in a browser. No build step, no dependencies.
 
